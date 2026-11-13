@@ -16,6 +16,12 @@
 2. Create a new key for "API Яндекс Расписаний"
 3. Activate the key via email
 
+## Requirements
+
+- Python 3.10+
+- Package version `mcp-yandex-rasp` 0.2.0+ (built on MCP Python SDK 2.x, `mcp>=2,<3`)
+- [uv](https://docs.astral.sh/uv/) (recommended) or pip
+
 ## Quick start
 
 ```bash
@@ -24,6 +30,9 @@ cd mcp-yandex-rasp
 
 cp .env.example .env
 # Edit .env and set your YANDEX_RASP_API_KEY
+
+# Install dependencies (MCP SDK 2.x)
+uv sync
 
 # Run (stdio mode — for Claude Desktop, Cline, Cursor)
 uv run server.py
@@ -81,6 +90,13 @@ npx @modelcontextprotocol/inspector uv run server.py
 ```
 
 ## Development
+
+```bash
+uv sync --extra dev
+uv run pytest -v
+```
+
+With pip instead of uv:
 
 ```bash
 pip install -e ".[dev]"

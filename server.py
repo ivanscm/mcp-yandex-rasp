@@ -7,7 +7,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import httpx
 import certifi
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 load_dotenv()
 
@@ -33,7 +33,9 @@ def _get_client() -> httpx.AsyncClient:
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 log = logging.getLogger(__name__)
 
-mcp = FastMCP("ya-rasp", json_response=True)
+# mcp 2.x: "name" is still the first positional parameter, but transport
+# options (json_response, port, ...) moved from the constructor to run().
+mcp = MCPServer("ya-rasp", version="0.2.0")
 
 
 async def _fetch(endpoint: str, params: dict | None = None, timeout: float | None = None) -> dict:
@@ -344,7 +346,7 @@ def main():
     argv = sys.argv[1:]
 
     if "--http" in argv:
-        kwargs: dict = {"transport": "streamable-http"}
+        kwargs: dict = {"transport": "streamable-http", "json_response": True}
         for i, arg in enumerate(argv):
             if arg == "--port" and i + 1 < len(argv):
                 kwargs["port"] = int(argv[i + 1])

@@ -4,7 +4,8 @@ import server
 
 
 @pytest.fixture(autouse=True)
-def reset():
+def reset(monkeypatch):
+    monkeypatch.setattr(server, "API_KEY", "test-key")
     server._HTTP_CLIENT = None
     if server._cache_exists():
         server.CACHE_DB.unlink(missing_ok=True)

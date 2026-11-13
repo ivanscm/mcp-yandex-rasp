@@ -1,12 +1,12 @@
 [project]
 name = "mcp-yandex-rasp"
-version = "0.1.0"
+version = "0.2.0"
 description = "MCP server for Yandex Rasp API — search routes, schedules, stations for AI agents"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = [
-    "mcp>=1.25,<2",
+    "mcp>=2,<3",
     "httpx>=0.28",
     "python-dotenv>=1.0",
     "certifi>=2024",
@@ -24,7 +24,11 @@ mcp-yandex-rasp = "server:main"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["server.py"]
 
 [build-system]
 requires = ["hatchling"]
